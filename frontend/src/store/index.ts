@@ -16,7 +16,7 @@ const persistConfig = {
 // Store definition
 const createGameStore: StateCreator<GameState> = (set) => ({
     clicks: 0,
-    addClick: () => set((state: GameState) => ({ clicks: state.clicks + 1 }), false, "add-click"),
+    addClick: () => set((state: GameState) => ({ clicks: state.clicks + 1 })),
 })
 
 // Compose store with middleware
