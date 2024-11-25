@@ -1,0 +1,14 @@
+{
+  "name": "lion-clicker",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "server"
+  ],
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "22.x.x",
+    "yarn": "1.22.x"
+  }
+}
