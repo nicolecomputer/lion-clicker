@@ -7,11 +7,6 @@ const styles = {
         alignItems: "center",
         justifyContent: "center",
     },
-    content: {
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-    },
     count: {
         marginBottom: "1rem",
     },
@@ -23,7 +18,13 @@ const LionClicker = () => {
 
     return (
         <div style={styles.container}>
-            <div style={styles.content}>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                }}
+            >
                 <div style={styles.count}>
                     <h1>Lions has received {clicks} Clicks</h1>
                 </div>
