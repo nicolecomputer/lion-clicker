@@ -29,7 +29,15 @@ const LionClicker = () => {
                     <h1>Lions has received {clicks} Clicks</h1>
                 </div>
                 <img src={lion} height={200} />
-                <button onClick={addClick}>
+                <button
+                    onClick={addClick}
+                    style={{
+                        height: 80,
+                        backgroundColor: "red",
+                        color: "white",
+                        fontSize: 44,
+                    }}
+                >
                     Click
                 </button>
             </div>
