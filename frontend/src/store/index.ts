@@ -17,11 +17,11 @@ const persistConfig = {
     storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, gameSlice.reducer)
+const persistedGameReducer = persistReducer(persistConfig, gameSlice.reducer)
 
 export const store = configureStore({
     reducer: {
-        game: persistedReducer
+        game: persistedGameReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
