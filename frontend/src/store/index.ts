@@ -1,6 +1,7 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit'
+import { createSlice, configureStore, Store } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import { websocketMiddleware } from './server-state-sync'
 
 const gameSlice = createSlice({
     name: 'game',
@@ -19,7 +20,13 @@ const persistConfig = {
 
 const persistedGameReducer = persistReducer(persistConfig, gameSlice.reducer)
 
-export const store = configureStore({
+interface StoreState {
+    game: ReturnType<typeof gameSlice.reducer> & {
+        _persist?: { version: number; rehydrated: boolean }
+    }
+}
+
+export const store: Store<StoreState> = configureStore({
     reducer: {
         game: persistedGameReducer
     },
@@ -28,10 +35,11 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE']
             }
-        })
+        }).concat(websocketMiddleware)
 })
 
 export const persistor = persistStore(store)
 export const { addClick } = gameSlice.actions
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export type GameActions = ReturnType<typeof addClick>
