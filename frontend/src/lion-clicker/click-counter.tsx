@@ -2,8 +2,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 export function ClickCounter() {
-    const totalClick = 1000;
     const yourClicks = useSelector((state: RootState) => state.game.clicks);
+    const globalClicks = useSelector((state: RootState) =>
+        state.game.globalState.totalClicks
+    );
 
     return (
         <div
@@ -19,7 +21,7 @@ export function ClickCounter() {
                     color: "lightpink",
                 }}
             >
-                Lion has received: {totalClick + yourClicks} clicks today
+                Lion has received: {globalClicks} clicks today
             </p>
             <p
                 style={{

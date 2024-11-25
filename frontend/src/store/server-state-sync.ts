@@ -1,6 +1,11 @@
-// websocketMiddleware.ts
+// server-state-sync.ts
 import { Middleware } from '@reduxjs/toolkit';
 import { RootState } from './index';
+
+interface StateUpdateMessage {
+    type: 'STATE_UPDATE';
+    totalClicks: number;
+}
 
 const getWebSocketUrl = () => {
     if (import.meta.env.PROD) {
@@ -12,7 +17,7 @@ const getWebSocketUrl = () => {
 export const websocketMiddleware: Middleware<
     unknown,
     RootState
-> = () => {
+> = (store) => {
     let ws: WebSocket | null = null;
     let reconnectTimeout: NodeJS.Timeout | null = null;
 
@@ -23,6 +28,20 @@ export const websocketMiddleware: Middleware<
 
         ws.onopen = () => {
             console.log('Connected to game server');
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const message = JSON.parse(event.data) as StateUpdateMessage;
+                if (message.type === 'STATE_UPDATE') {
+                    store.dispatch({
+                        type: 'game/updateGlobalState',
+                        payload: { totalClicks: message.totalClicks }
+                    });
+                }
+            } catch (error) {
+                console.error('Error processing server message:', error);
+            }
         };
 
         ws.onclose = () => {
@@ -49,7 +68,6 @@ export const websocketMiddleware: Middleware<
         // Connect when the middleware is first used
         if (!ws) connect();
 
-        // Check if it's our click action using type guard
         if (action && typeof action === 'object' && 'type' in action) {
             if (action.type === 'game/addClick') {
                 if (ws?.readyState === WebSocket.OPEN) {
