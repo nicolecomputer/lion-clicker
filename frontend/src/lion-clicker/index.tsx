@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { addClick, RootState } from "../store";
-
 import lion from "../assets/false-lion.svg";
+import { ClickCounter } from "./click-counter";
+import { MouseClick } from "./mouse-click";
 const styles = {
     container: {
         height: "100vh",
@@ -15,9 +14,6 @@ const styles = {
 };
 
 const LionClicker = () => {
-    const clicks = useSelector((state: RootState) => state.game.clicks);
-    const dispatch = useDispatch();
-
     return (
         <div style={styles.container}>
             <div
@@ -27,21 +23,9 @@ const LionClicker = () => {
                     flexDirection: "column",
                 }}
             >
-                <div style={styles.count}>
-                    <h1>Lions has received {clicks} Clicks</h1>
-                </div>
+                <ClickCounter />
                 <img src={lion} height={200} />
-                <button
-                    onClick={() => dispatch(addClick())}
-                    style={{
-                        height: 80,
-                        backgroundColor: "red",
-                        color: "white",
-                        fontSize: 44,
-                    }}
-                >
-                    Click
-                </button>
+                <MouseClick />
             </div>
         </div>
     );

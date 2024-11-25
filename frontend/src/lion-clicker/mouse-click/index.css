@@ -1,0 +1,28 @@
+#mouse-button-click {
+    background-color: red;
+    height: 60px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+
+    box-shadow: 6px 6px rgba(106, 7, 7, 0.736);
+
+    user-select: none;
+}
+
+#mouse-button-click:hover {
+    box-shadow:
+    0 0 100px 60px rgba(255, 0, 255, 0.0983),
+    6px 6px rgba(106, 7, 7, 0.736);
+}
+
+#mouse-button-click:active {
+    filter: brightness(85%);
+    box-shadow:     0 0 100px 60px rgba(255, 0, 255, 0.0983),
+    2px 2px rgba(106, 7, 7, 0.736);
+    translate: 4px 4px;
+    color: rgb(228, 248, 230);
+}
+
