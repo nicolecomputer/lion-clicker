@@ -10,5 +10,9 @@
   "engines": {
     "node": "22.x.x",
     "yarn": "1.22.x"
+  },
+  "scripts": {
+    "build": "yarn workspace server build",
+    "start": "yarn workspace server start"
   }
 }
