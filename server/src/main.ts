@@ -1,7 +1,7 @@
 import { buildServer } from './server'
 
 const start = async () => {
-    const server = buildServer()
+    const server = await buildServer()
 
     try {
         // Use PORT from environment or default to 3000

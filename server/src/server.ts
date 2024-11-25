@@ -3,16 +3,21 @@ import Fastify from 'fastify'
 import { routes } from './routes'
 import fastifyStatic from '@fastify/static'
 import fastifyCors from '@fastify/cors'
+import websocket from '@fastify/websocket'
 import path from 'path'
 
-export function buildServer() {
+export async function buildServer() {
     const server = Fastify({
         logger: true
     })
 
+    // Start web sockets - moved to be registered first
+    await server.register(websocket)
+
     if (process.env.NODE_ENV !== 'production') {
         server.register(fastifyCors, {
-            origin: 'http://localhost:5173'
+            origin: ['http://localhost:5173', 'http://localhost:8080'],
+            methods: ['GET', 'POST']
         })
     }
 
