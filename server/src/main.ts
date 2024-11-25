@@ -4,7 +4,9 @@ const start = async () => {
     const server = buildServer()
 
     try {
-        await server.listen({ port: 3000 })
+        // Use PORT from environment or default to 3000
+        const port = parseInt(process.env.PORT || '3000')
+        await server.listen({ port, host: '0.0.0.0' })
     } catch (err) {
         server.log.error(err)
         process.exit(1)
