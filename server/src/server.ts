@@ -2,12 +2,19 @@
 import Fastify from 'fastify'
 import { routes } from './routes'
 import fastifyStatic from '@fastify/static'
+import fastifyCors from '@fastify/cors'
 import path from 'path'
 
 export function buildServer() {
     const server = Fastify({
         logger: true
     })
+
+    if (process.env.NODE_ENV !== 'production') {
+        server.register(fastifyCors, {
+            origin: 'http://localhost:5173'
+        })
+    }
 
     // Register static file serving
     server.register(fastifyStatic, {

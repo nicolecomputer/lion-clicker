@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 
 export function routes(server: FastifyInstance) {
-    server.get('/health', async () => {
-        return { status: 'totally ok' }
+    server.get('/api/health', async () => {
+        return { status: 'ok', timestamp: new Date().toISOString() }
     })
 }
