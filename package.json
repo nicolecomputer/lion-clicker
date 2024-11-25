@@ -12,7 +12,11 @@
     "yarn": "1.22.x"
   },
   "scripts": {
-    "build": "yarn workspace server build",
+    "dev": "concurrently \"yarn workspace server dev\" \"yarn workspace frontend dev\"",
+    "build": "yarn workspace frontend build && yarn workspace server build",
     "start": "yarn workspace server start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
   }
 }
