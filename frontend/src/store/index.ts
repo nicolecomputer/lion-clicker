@@ -1,30 +1,37 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import { devtools } from 'zustand/middleware'
-import { StateCreator } from 'zustand'
+import { createSlice, configureStore } from '@reduxjs/toolkit'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-interface GameState {
-    clicks: number
-    addClick: () => void
-}
-
-// Middleware configuration
-const persistConfig = {
-    name: 'game-storage'
-}
-
-// Store definition
-const createGameStore: StateCreator<GameState> = (set) => ({
-    clicks: 0,
-    addClick: () => set((state: GameState) => ({ clicks: state.clicks + 1 })),
+const gameSlice = createSlice({
+    name: 'game',
+    initialState: { clicks: 0 },
+    reducers: {
+        addClick: (state) => {
+            state.clicks++
+        }
+    }
 })
 
-// Compose store with middleware
-export const useGameStore = create<GameState>()(
-    devtools(
-        persist(
-            createGameStore,
-            persistConfig
-        )
-    )
-)
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, gameSlice.reducer)
+
+export const store = configureStore({
+    reducer: {
+        game: persistedReducer
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE']
+            }
+        })
+})
+
+export const persistor = persistStore(store)
+export const { addClick } = gameSlice.actions
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

@@ -1,4 +1,6 @@
-import { useGameStore } from "../store/";
+import { useDispatch, useSelector } from "react-redux";
+import { addClick, RootState } from "../store";
+
 import lion from "../assets/false-lion.svg";
 const styles = {
     container: {
@@ -13,8 +15,8 @@ const styles = {
 };
 
 const LionClicker = () => {
-    const clicks = useGameStore((state) => state.clicks);
-    const addClick = useGameStore((state) => state.addClick);
+    const clicks = useSelector((state: RootState) => state.game.clicks);
+    const dispatch = useDispatch();
 
     return (
         <div style={styles.container}>
@@ -30,7 +32,7 @@ const LionClicker = () => {
                 </div>
                 <img src={lion} height={200} />
                 <button
-                    onClick={addClick}
+                    onClick={() => dispatch(addClick())}
                     style={{
                         height: 80,
                         backgroundColor: "red",
