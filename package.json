@@ -4,7 +4,8 @@
   "private": true,
   "workspaces": [
     "frontend",
-    "server"
+    "server",
+    "packages/*"
   ],
   "license": "UNLICENSED",
   "engines": {
@@ -12,9 +13,10 @@
     "yarn": "1.22.x"
   },
   "scripts": {
-    "dev": "concurrently \"yarn workspace server dev\" \"yarn workspace frontend dev\"",
-    "build": "yarn workspace frontend build && yarn workspace server build",
-    "start": "yarn workspace server start"
+    "dev": "concurrently \"yarn workspace server dev\" \"yarn workspace frontend dev\" \"yarn workspace @lion-clicker/core-logic dev\"",
+    "build": "yarn workspace @lion-clicker/core-logic build && yarn workspace frontend build && yarn workspace server build",
+    "start": "yarn workspace server start",
+    "clean": "rm -rf server/dist/; rm -rf frontend/dist/; rm -rf packages/core-logic/dist/"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

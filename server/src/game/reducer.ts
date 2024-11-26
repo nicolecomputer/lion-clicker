@@ -1,22 +1,6 @@
-// Messages that we expect to send to the client
-export type OutgoingStateUpdateMessage = {
-    type: 'STATE_UPDATE'
-    totalClicks: number
-}
+import { GameState, ClientToServerEvents } from "@lion-clicker/core-logic"
 
-// Messages we expect to send to the client
-export type ClickAction = {
-    type: "CLICK"
-}
-
-type IncomingAction = ClickAction;
-
-// Game State
-export type GameState = {
-    totalClicks: number
-}
-
-export function reducer(state: GameState, action: IncomingAction): GameState {
+export function reducer(state: GameState, action: ClientToServerEvents): GameState {
     if (action.type === "CLICK") {
         return {
             totalClicks: state.totalClicks + 1
@@ -27,6 +11,6 @@ export function reducer(state: GameState, action: IncomingAction): GameState {
 }
 
 export const initialState: GameState = {
-    totalClicks: 1
+    totalClicks: 0
 }
 

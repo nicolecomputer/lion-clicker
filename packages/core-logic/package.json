@@ -1,0 +1,14 @@
+{
+  "name": "@lion-clicker/core-logic",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "typescript": "^5.7.2"
+  }
+}

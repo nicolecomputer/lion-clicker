@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { WebSocket } from 'ws'
 
-import type { GameState, OutgoingStateUpdateMessage, ClickAction } from './game/reducer';
+import { GameState, ServerToClientEvents, StateUpdateMessage, ClickAction } from "@lion-clicker/core-logic"
 import { initialState, reducer } from './game/reducer';
 
 let gameState: GameState = initialState;
@@ -10,7 +10,7 @@ const connectedClients = new Set<WebSocket>();
 export function routes(server: FastifyInstance) {
     // Set up periodic state broadcasts
     setInterval(() => {
-        const updateMessage: OutgoingStateUpdateMessage = {
+        const updateMessage: StateUpdateMessage = {
             type: 'STATE_UPDATE',
             totalClicks: gameState.totalClicks
         };
