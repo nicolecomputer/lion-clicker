@@ -9,13 +9,8 @@ const gameSlice = createSlice({
         }
     },
     reducers: {
-        addClick: {
-            prepare: (userId: string) => ({
-                payload: { userId }
-            }),
-            reducer: (state) => {
-                state.clicks++
-            }
+        addClick: (state) => {
+            state.clicks++
         },
         updateGlobalState: (state, action: { payload: { totalClicks: number } }) => {
             state.globalState.totalClicks = action.payload.totalClicks
