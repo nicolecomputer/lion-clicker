@@ -1,34 +1,18 @@
-import lion from "../assets/false-lion.svg";
-import { ClickCounter } from "./click-counter";
-import { MouseClick } from "./mouse-click";
-const styles = {
-    container: {
-        height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    count: {
-        marginBottom: "1rem",
-    },
-};
+import Loading from "./Loading";
+import Game from "./Game";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const LionClicker = () => {
-    return (
-        <div style={styles.container}>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                }}
-            >
-                <ClickCounter />
-                <img src={lion} height={200} />
-                <MouseClick />
-            </div>
-        </div>
+    const connected: boolean = useSelector((state: RootState) =>
+        state.connection.isConnected
     );
+
+    if (connected) {
+        return <Game />;
+    }
+
+    return <Loading />;
 };
 
 export default LionClicker;
