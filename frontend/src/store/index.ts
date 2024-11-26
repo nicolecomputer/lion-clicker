@@ -12,3 +12,5 @@ export const store: Store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(websocketMiddleware)
 })
+
+export type RootState = ReturnType<typeof store.getState>

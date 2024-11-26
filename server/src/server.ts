@@ -1,4 +1,3 @@
-// src/server.ts
 import Fastify from 'fastify'
 import { routes } from './routes'
 import fastifyStatic from '@fastify/static'

@@ -34,6 +34,7 @@ export function routes(server: FastifyInstance) {
         socket.on('message', (rawMessage) => {
             try {
                 const message = JSON.parse(rawMessage.toString()) as ClickAction
+                console.log(message)
 
                 if (message.type === 'CLICK') {
                     gameState = reducer(gameState, message)

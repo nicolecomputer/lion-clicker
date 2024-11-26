@@ -65,13 +65,13 @@ export const websocketMiddleware: Middleware<
     };
 
     return next => action => {
-        // Connect when the middleware is first used
         if (!ws) connect();
 
         if (action && typeof action === 'object' && 'type' in action) {
             if (action.type === 'game/addClick') {
                 if (ws?.readyState === WebSocket.OPEN) {
-                    ws.send(JSON.stringify({ type: 'CLICK' }));
+                    const userId = store.getState().user.userId;
+                    ws.send(JSON.stringify({ type: 'CLICK', userId }));
                 }
             }
         }
