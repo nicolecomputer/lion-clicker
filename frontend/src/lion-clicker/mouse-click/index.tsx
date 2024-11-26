@@ -9,7 +9,7 @@ export function MouseClick() {
     return (
         <button
             id="mouse-button-click"
-            onClick={() => dispatch(addClick())}
+            onClick={() => dispatch(addClick({ source: "mouse" }))}
             style={{}}
         >
             Click

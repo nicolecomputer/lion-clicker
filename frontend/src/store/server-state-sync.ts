@@ -35,12 +35,12 @@ export const websocketMiddleware: Middleware<
         ws.onmessage = (event) => {
             try {
                 const message = JSON.parse(event.data) as StateUpdateMessage;
-                if (message.type === 'STATE_UPDATE') {
-                    store.dispatch({
-                        type: 'game/updateGlobalState',
-                        payload: { totalClicks: message.totalClicks }
-                    });
-                }
+                store.dispatch({
+                    type: `server/${message.type}`,
+                    payload: {
+                        ...message
+                    }
+                })
             } catch (error) {
                 console.error('Error processing server message:', error);
             }

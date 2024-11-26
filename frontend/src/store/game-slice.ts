@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+type ClickSource = 'mouse'
 const gameSlice = createSlice({
     name: 'game',
     initialState: {
@@ -9,8 +10,11 @@ const gameSlice = createSlice({
         }
     },
     reducers: {
-        addClick: (state) => {
-            state.clicks++
+        addClick: (state, action: PayloadAction<{ source: ClickSource }>) => {
+            switch (action.payload.source) {
+                case 'mouse':
+                    state.clicks += 1
+            }
         },
         updateGlobalState: (state, action: { payload: { totalClicks: number } }) => {
             state.globalState.totalClicks = action.payload.totalClicks
