@@ -6,6 +6,7 @@ export type StateUpdateMessage = {
 
 export type ClickAction = {
     type: 'CLICK'
+    userId: string
 }
 
 export type ServerToClientEvents = StateUpdateMessage

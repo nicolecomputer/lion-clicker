@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addClick } from "../../store";
+import { addClick } from "../../store/game-slice";
 
 import "./index.css";
 
