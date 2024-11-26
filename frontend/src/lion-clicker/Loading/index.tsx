@@ -26,7 +26,7 @@ const Loading = () => {
                     src={lion}
                     height={200}
                     style={{
-                        filter: "brightness(10%)",
+                        filter: "brightness(20%)",
                     }}
                 />
             </div>

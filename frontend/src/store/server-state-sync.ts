@@ -1,6 +1,7 @@
 // server-state-sync.ts
 import { Middleware } from '@reduxjs/toolkit';
 import { RootState } from './index';
+import { setConnected } from './connection-slice';
 
 interface StateUpdateMessage {
     type: 'STATE_UPDATE';
@@ -28,6 +29,7 @@ export const websocketMiddleware: Middleware<
 
         ws.onopen = () => {
             console.log('Connected to game server');
+            store.dispatch(setConnected(true))
         };
 
         ws.onmessage = (event) => {
@@ -46,6 +48,7 @@ export const websocketMiddleware: Middleware<
 
         ws.onclose = () => {
             console.log('Disconnected from game server');
+            store.dispatch(setConnected(false))
             scheduleReconnect();
         };
 
@@ -64,6 +67,8 @@ export const websocketMiddleware: Middleware<
         }, 3000);
     };
 
+    connect()
+
     return next => action => {
         if (!ws) connect();
 
@@ -78,4 +83,5 @@ export const websocketMiddleware: Middleware<
 
         return next(action);
     };
+
 };
