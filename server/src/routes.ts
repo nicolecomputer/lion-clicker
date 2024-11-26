@@ -32,7 +32,7 @@ function reducer(state: GameState, action: Action): GameState {
 }
 
 let initialState: GameState = {
-    totalClicks: 0
+    totalClicks: 1
 }
 
 let gameState: GameState = initialState;
@@ -52,7 +52,7 @@ export function routes(server: FastifyInstance) {
                 client.send(JSON.stringify(updateMessage));
             }
         });
-    }, 2000);
+    }, 500);
 
     server.get('/api/health', async () => {
         return { status: 'ok', timestamp: new Date().toISOString() }
