@@ -1,39 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import { WebSocket } from 'ws'
 
-// Define our message types
-interface ClickMessage {
-    type: 'CLICK'
-}
-
-interface StateUpdateMessage {
-    type: 'STATE_UPDATE'
-    totalClicks: number
-}
-
-type GameState = {
-    totalClicks: number
-}
-
-type ClickAction = {
-    type: "CLICK"
-}
-
-type Action = ClickAction;
-
-function reducer(state: GameState, action: Action): GameState {
-    if (action.type === "CLICK") {
-        return {
-            totalClicks: state.totalClicks + 1
-        }
-    }
-
-    return state;
-}
-
-let initialState: GameState = {
-    totalClicks: 1
-}
+import type { GameState, OutgoingStateUpdateMessage, ClickAction } from './game/reducer';
+import { initialState, reducer } from './game/reducer';
 
 let gameState: GameState = initialState;
 const connectedClients = new Set<WebSocket>();
@@ -41,7 +10,7 @@ const connectedClients = new Set<WebSocket>();
 export function routes(server: FastifyInstance) {
     // Set up periodic state broadcasts
     setInterval(() => {
-        const updateMessage: StateUpdateMessage = {
+        const updateMessage: OutgoingStateUpdateMessage = {
             type: 'STATE_UPDATE',
             totalClicks: gameState.totalClicks
         };
@@ -64,7 +33,7 @@ export function routes(server: FastifyInstance) {
 
         socket.on('message', (rawMessage) => {
             try {
-                const message = JSON.parse(rawMessage.toString()) as ClickMessage
+                const message = JSON.parse(rawMessage.toString()) as ClickAction
 
                 if (message.type === 'CLICK') {
                     gameState = reducer(gameState, message)
